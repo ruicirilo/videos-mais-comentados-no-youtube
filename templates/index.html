@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videos mais comentados no youtube</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f5;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 18px;
+            text-align: left;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        async function fetchData() {
+            const response = await fetch('/scrape');
+            const data = await response.json();
+            const tableBody = document.getElementById('table-body');
+            tableBody.innerHTML = '';
+
+            data.forEach(row => {
+                let newRow = document.createElement('tr');
+                
+                row.forEach(col => {
+                    let newCol = document.createElement('td');
+                    newCol.innerHTML = col;
+                    newRow.appendChild(newCol);
+                });
+
+                tableBody.appendChild(newRow);
+            });
+        }
+
+        // Carrega os vídeos automaticamente ao abrir a página
+        window.onload = fetchData;
+    </script>
+</head>
+<body>
+    <h1>Videos mais comentados no youtube</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Video</th>
+                <th>Comentarios</th>
+                <th>Ver No YT</th>
+              
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            <!-- Dados serão carregados aqui -->
+        </tbody>
+    </table>
+</body>
+</html>
+
+
